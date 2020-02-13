@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kirov_X"
         mc:Ignorable="d"
-        Title="Kirov-X" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="ToolWindow" FontFamily="Arial" NonActiveGlowBrush="Red" GlowBrush="Blue" WindowTransitionsEnabled="False">
+        Title="Kirov-X" Height="450" Width="800" ResizeMode="CanMinimize" WindowStyle="ToolWindow" FontFamily="Arial" NonActiveGlowBrush="Red" GlowBrush="Blue" WindowTransitionsEnabled="False" Loaded="MetroWindow_Loaded">
     <Controls:MetroWindow.Background>
         <ImageBrush ImageSource="Assets/img/default_background.jpg"/>
     </Controls:MetroWindow.Background>
@@ -20,7 +20,7 @@
         <TextBox x:Name="TextBox_Input" HorizontalAlignment="Left" Height="26" Margin="404,396,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="342" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" FontFamily="/Kirov-X;component/Assets/font/#Source Han Sans CN Normal" KeyDown="TextBox_Input_KeyDown" BorderThickness="0"/>
         <Button x:Name="Button_Enter" Content="Enter" Margin="746,396,-1,0" VerticalAlignment="Top" Height="26" ClickMode="Press" HorizontalAlignment="Left" Width="55" Click="Button_Enter_Click" Style="{DynamicResource SimpleButton}" BorderBrush="Gray" Background="#FFF7F7F7"/>
         <ScrollViewer x:Name="ConsoleScroll" Margin="404,40,0,0" VerticalAlignment="Top" Height="357" HorizontalAlignment="Left" Width="390">
-            <TextBox x:Name="Console" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" MinHeight="357" IsReadOnly="True" Background="#CC404040" BorderBrush="{x:Null}" BorderThickness="0" Foreground="White"/>
+            <TextBox x:Name="Console" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" MinHeight="357" IsReadOnly="True" Background="#CC404040" BorderBrush="{x:Null}" BorderThickness="0" Foreground="White" TextChanged="Console_TextChanged"/>
         </ScrollViewer>
         <Controls:Tile x:Name="Tile_Test" Content="测试" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top" Width="160" Height="100" FontFamily="/Kirov-X;component/Assets/font/#Source Han Sans CN Normal" FontSize="36" Click="Tile_Test_Click"/>
 

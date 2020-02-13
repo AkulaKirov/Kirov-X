@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Kirov_X;
+using System.Threading.Tasks;
 
 namespace Kirov_X
 {
@@ -24,7 +15,8 @@ namespace Kirov_X
     public partial class MainWindow : MetroWindow
     {
         DispatcherTimer timer = new DispatcherTimer();
-        
+        public static bool isLoading = true;
+
 
         public MainWindow()
         {
@@ -32,12 +24,6 @@ namespace Kirov_X
             timer.Tick += new EventHandler(timer_Tick);
             Label_Time.Content = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             timer.Start();
-            Console.Text += "[Admin]AkulaKirov>";
-        }
-
-        private void Tile_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         void timer_Tick(object sender, EventArgs e)
@@ -56,9 +42,13 @@ namespace Kirov_X
             MessageDialogResult result = await this.ShowMessageAsync("提示", "确定重启终端吗？",MessageDialogStyle.AffirmativeAndNegative);
             if (result == MessageDialogResult.Affirmative)
             {
-                Console.Text = null;
+                if (isLoading == true)
+                {
+                    await this.ShowMessageAsync("错误", "终端已在重启", MessageDialogStyle.Affirmative);
+                    return;
+                }
+                Funtion.ConsoleInit(Console);
             }
-            Console.Text += "[Admin]AkulaKirov>";
         }
 
         private void TextBox_Input_KeyDown(object sender, KeyEventArgs e)
@@ -71,22 +61,37 @@ namespace Kirov_X
 
         private void ConsoleInput(string s)
         {
-            Console.Text += s + "\n";
-            string a = s.Replace(" ","");
-            if (a != "")
+            if (isLoading == false)
             {
-                Funtion.Run(s, this.Console);
+                if (s.Replace(" ", "") != "")
+                {
+                    Funtion.ConsoleRun(s, Console);
+                }
+                else
+                {
+                    Funtion.ConsoleDisplay("", Console);
+                }
             }
-
-            Console.Text += "\n" + "[Admin]AkulaKirov>";
-            ConsoleScroll.ScrollToBottom();
         }
 
         private void Tile_Test_Click(object sender, RoutedEventArgs e)
         {
-            Console.Text += "say 测试" + "\n";
-            Funtion.Run("say 测试",this.Console);
-            Console.Text += "\n" + "[Admin]AkulaKirov>";
+            Funtion.baidu.token = Funtion.baidu.getToken();
+            Funtion.ConsoleDisplay(Funtion.baidu.token,Console);
+            Funtion.baidu.getAudio(Funtion.baidu.token,"这是一段测试语音");
+            //baidu.getAudio("24.bb6c896c1b9e79fbab2b5f496681ac9a.2592000.1584161326.282335-18455211","这是一段测试语音");
+            Funtion.ConsoleDisplay("这是一段测试语音", Console);
+            Funtion.baidu.playSound();
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Funtion.ConsoleInit(Console);
+        }
+
+        private void Console_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            ConsoleScroll.ScrollToBottom();
         }
     }
 }
